@@ -35,7 +35,7 @@ d3.json(url).then(function(data){
         color:"green",
         fillColr:"green",
         fillOpacity:0.5,
-        radius:500
+        radius:(mag*50000)
     }).addTo(myMap)
 }
 })
