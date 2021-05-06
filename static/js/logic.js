@@ -18,6 +18,17 @@ var endTime='2020-01-02'
 
 var url=`https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTime}&endtime=${endTime}`
 
+function getColor(depth){
+    
+    if (depth<10){
+        return "green"
+    }else if(depth<30){
+        return "red"
+    }else{
+        return "black"
+    }
+}
+
 d3.json(url).then(function(data){
 
     for (var i=0;i<data.features.length;i++){
@@ -32,8 +43,8 @@ d3.json(url).then(function(data){
     var time=new Date(features.properties.time)
 
     L.circle([lat,long],{
-        color:"green",
-        fillColr:"green",
+        color:"none",
+        fillColor:getColor(depth),
         fillOpacity:0.5,
         radius:(mag*50000)
     }).bindPopup(`<h2>${place}</h2><hr><p>${time}</p>`)
