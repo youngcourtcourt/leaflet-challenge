@@ -31,5 +31,11 @@ d3.json(url).then(function(data){
     var place=features.properties.place
     var time=new Date(features.properties.time)
 
+    L.circle([lat,long],{
+        color:"green",
+        fillColr:"green",
+        fillOpacity:0.5,
+        radius:500
+    }).addTo(myMap)
 }
 })
