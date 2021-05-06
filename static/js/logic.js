@@ -1,6 +1,6 @@
 var myMap=L.map("map", {
     center:[17.92, -66.92], 
-    zoom:4
+    zoom:3
 })
 
 L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -21,13 +21,34 @@ var url=`https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&startti
 function getColor(depth){
     
     if (depth<10){
-        return "green"
+        return "#fafa6e"
+
     }else if(depth<30){
-        return "red"
+        return "#9cdf7c"
+    }else if(depth<50){
+        return "#4abd8c"
+    }else if(depth<70){
+        return "#00968e"
+    }else if(depth<90){
+        return "#106e7c"
     }else{
-        return "black"
+        return "#2a4858"
     }
 }
+
+
+var info = L.control({
+    position: "bottomright"
+  })
+  
+  // When the layer control is added, insert a div with the class of "legend"
+  info.onAdd = function() {
+    var div = L.DomUtil.create("div", "legend");
+    return div;
+  };
+  // Add the info legend to the map
+  info.addTo(myMap);
+
 
 d3.json(url).then(function(data){
 
@@ -42,14 +63,15 @@ d3.json(url).then(function(data){
     var place=features.properties.place
     var time=new Date(features.properties.time)
 
-    L.circle([lat,long],{
+    var circles=L.circle([lat,long],{
         color:"none",
         fillColor:getColor(depth),
-        fillOpacity:0.5,
+        fillOpacity:0.85,
         radius:(mag*50000)
-    }).bindPopup(`<h2>${place}</h2><hr><p>${time}</p>`)
+    }).bindPopup(`<h2>${place}</h2><hr><p>${time} Magnitude:${mag} Depth: ${depth}</p>`)
     .addTo(myMap)
 
+   
     
 }
 })
