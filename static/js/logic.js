@@ -36,6 +36,9 @@ d3.json(url).then(function(data){
         fillColr:"green",
         fillOpacity:0.5,
         radius:(mag*50000)
-    }).addTo(myMap)
+    }).bindPopup(`<h2>${place}</h2><hr><p>${time}</p>`)
+    .addTo(myMap)
+
+    
 }
 })
