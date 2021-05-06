@@ -1,12 +1,13 @@
-var startTime='2014-01-01'
-var endTime='2014-01-02'
+var startTime='2020-01-01'
+var endTime='2020-01-02'
 
 var url=`https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startTime}&endtime=${endTime}`
 
 d3.json(url).then(function(data){
 
-    var features=data.features[1]
-    // console.log(features.properties.time)
+    for (var i=0;i<data.features.length;i++){
+    
+    var features=data.features[i]
 
     var lat=features.geometry.coordinates[1]
     var long=features.geometry.coordinates[0]
@@ -15,4 +16,6 @@ d3.json(url).then(function(data){
     var place=features.properties.place
     var time=new Date(features.properties.time)
 
+    console.log(lat, long, depth, mag, place, time)
+}
 })
