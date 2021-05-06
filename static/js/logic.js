@@ -37,17 +37,26 @@ function getColor(depth){
 }
 
 
-var info = L.control({
+
+var legend = L.control({
     position: "bottomright"
   })
   
   // When the layer control is added, insert a div with the class of "legend"
-  info.onAdd = function() {
-    var div = L.DomUtil.create("div", "legend");
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend");
+    var grades=[10,30,50,70,90]
+    labels=[]
+    // var labels=['#fafa6e','#9cdf7c','#4abd8c','#00968e','#106e7c','#2a4858']
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
     return div;
   };
   // Add the info legend to the map
-  info.addTo(myMap);
+  legend.addTo(myMap);
 
 
 d3.json(url).then(function(data){
